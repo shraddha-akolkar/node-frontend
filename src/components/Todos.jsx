@@ -1,17 +1,19 @@
 import React, { useEffect,useState } from "react";
 import AddTodo from "./AddTodo";
+import { getAllTodos } from "../service/todo.service";
 
 const Todos = () => {
-  const [todoArray, setTodoArray] = useState([ {},]);
+  const [todoArray, setTodoArray] = useState([]);
 
-  const fetchTodos = async () => {
+ const fetchTodos = async () => {
   try {
-    const arr = await getAllTodos();
-    setTodoArray(arr.data);  
+    const todos = await getAllTodos();
+    setTodoArray(todos);   
   } catch (error) {
     console.log(error);
   }
 };
+
 
 
   useEffect(() => {
@@ -20,7 +22,7 @@ const Todos = () => {
       
   return (
     <div className="mt-24 px-6">
-      <AddTodo/>
+<AddTodo onTodoAdded={fetchTodos} />
       <h2 className="text-2xl font-extrabold text-center mb-6 text-gray-800">
         ALL TODOS
       </h2>
@@ -45,31 +47,40 @@ const Todos = () => {
           </thead>
 
           <tbody>
-            {todoArray.map((todo, index) => (
-              <tr
-                key={todo._id}
-                className="hover:bg-gray-50 transition"
-              >
-                <td className="border border-[#3A2D34] px-4 py-2">
-                  {index + 1}
-                </td>
-                <td className="border border-[#3A2D34] px-4 py-2">
-                  {todo.title}
-                </td>
-                <td className="border border-[#3A2D34] px-4 py-2">
-                  {todo.description}
-                </td>
-                <td className="border border-[#3A2D34] px-4 py-2 space-x-2">
-                  <button className="bg-[#75619D] hover:bg-[#BEAEDB] text-white px-3 py-1 rounded">
-                    Edit
-                  </button>
-                  <button className="bg-[#3F2A52] hover:bg-[#BEAEDB] text-white px-3 py-1 rounded">
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
+  {todoArray.length > 0 ? (
+    todoArray.map((todo, index) => (
+      <tr
+        key={todo._id || index}
+        className="hover:bg-gray-50 transition"
+      >
+        <td className="border border-[#3A2D34] px-4 py-2">
+          {index + 1}
+        </td>
+        <td className="border border-[#3A2D34] px-4 py-2">
+          {todo.title}
+        </td>
+        <td className="border border-[#3A2D34] px-4 py-2">
+          {todo.description}
+        </td>
+        <td className="border border-[#3A2D34] px-4 py-2 space-x-2">
+          <button className="bg-[#75619D] hover:bg-[#BEAEDB] text-white px-3 py-1 rounded">
+            Edit
+          </button>
+          <button className="bg-[#3F2A52] hover:bg-[#BEAEDB] text-white px-3 py-1 rounded">
+            Delete
+          </button>
+        </td>
+      </tr>
+    ))
+  ) : (
+    <tr>
+      <td colSpan="4" className="text-center py-4">
+        No todos found
+      </td>
+    </tr>
+  )}
+</tbody>
+
         </table>
       </div>
     </div>
