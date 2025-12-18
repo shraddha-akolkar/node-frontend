@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from "react";
 import AddTodo from "./AddTodo";
-import { getAllTodos } from "../service/todo.service";
+import { deleteTodo, getAllTodos } from "../service/todo.service";
 
 const Todos = () => {
   const [todoArray, setTodoArray] = useState([]);
@@ -14,7 +14,16 @@ const Todos = () => {
   }
 };
 
-
+// del
+const deleteTodoApiCall = async (id) => {
+  try {
+    const message = await deleteTodo(id);
+    await fetchTodos(); 
+    alert(message);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
   useEffect(() => {
     fetchTodos();
@@ -63,10 +72,11 @@ const Todos = () => {
           {todo.description}
         </td>
         <td className="border border-[#3A2D34] px-4 py-2 space-x-2">
-          <button className="bg-[#75619D] hover:bg-[#BEAEDB] text-white px-3 py-1 rounded">
+          <button className="bg-[#75619D] hover:bg-[#BEAEDB] text-white px-3 py-1 rounded cursor-pointer">
             Edit
           </button>
-          <button className="bg-[#3F2A52] hover:bg-[#BEAEDB] text-white px-3 py-1 rounded">
+          <button className="bg-[#3F2A52] hover:bg-[#BEAEDB] text-white px-3 py-1 rounded cursor-pointer"
+          onClick={() => deleteTodoApiCall(todo._id)}>
             Delete
           </button>
         </td>

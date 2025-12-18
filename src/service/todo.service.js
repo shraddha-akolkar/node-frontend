@@ -75,17 +75,9 @@ const getAllTodos = async () => {
 
 const addTodo = async (title, description) => {
   try {
-    const token = localStorage.getItem("token");
 
-    const response = await axios.post(
-      `${BASE_URL}/todos/add-todo`,
-      { title, description },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.post(`${BASE_URL}/todos/add-todo`, { title, description },
+     getHtppOption );
 
     return response.data;
   } catch (error) {
@@ -96,15 +88,20 @@ const addTodo = async (title, description) => {
 
 
 // delete todo
-// const deleteTodo = async(id) =>{
-//   try {
-//     const response = await axios.delete(BASE_URL)
-    
-//   } catch (error) {
-//     console.log(error);
-    
-//   }
-// }
-// }
+const deleteTodo = async (id) => {
+  try {
+    const response = await axios.delete(
+      `${BASE_URL}/todos/${id}`,
+      getHtppOption
+    );
 
-export { register, login, getAllTodos ,addTodo};
+    return response.data.message;
+  } catch (error) {
+    console.error("Delete error:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+
+
+export { register, login, getAllTodos ,addTodo, deleteTodo};
