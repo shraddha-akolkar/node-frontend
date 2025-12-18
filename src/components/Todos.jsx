@@ -37,7 +37,7 @@ const deleteTodoApiCall = async (id) => {
       </h2>
 
       <div className="overflow-x-auto">
-        <table className="min-w-full border border-[#3A2D34] text-center  overflow-hidden">
+        <table className="min-w-full border border-[#3A2D34] text-center  overflow-hidden mb-10">
           <thead className="bg-[#BEAEDB] ">
             <tr>
               <th className="border  border-[#3A2D34] px-4 py-3 text-center">
@@ -72,10 +72,10 @@ const deleteTodoApiCall = async (id) => {
           {todo.description}
         </td>
         <td className="border border-[#3A2D34] px-4 py-2 space-x-2">
-          <button className="bg-[#75619D] hover:bg-[#BEAEDB] text-white px-3 py-1 rounded cursor-pointer">
+          <button className="bg-[#75619D] hover:bg-[#af92e4] text-white px-3 py-1 rounded cursor-pointer">
             Edit
           </button>
-          <button className="bg-[#3F2A52] hover:bg-[#BEAEDB] text-white px-3 py-1 rounded cursor-pointer"
+          <button className="bg-[#3F2A52] hover:bg-[#2a1e3e] text-white px-3 py-1 rounded cursor-pointer"
           onClick={() => deleteTodoApiCall(todo._id)}>
             Delete
           </button>
