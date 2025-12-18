@@ -4,9 +4,10 @@ const BASE_URL = "http://localhost:3000/api";
     const token = localStorage.getItem("token");
 const getHtppOption = {
   headers: {
-          Authorization: `Bearer ${token}`,
-        }
-}
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
+};
+
 /**
  * 
  * @param {*} name  string
@@ -102,6 +103,20 @@ const deleteTodo = async (id) => {
   }
 };
 
+// edit
+const editTodo = async (id, newTitle, newDesc) => {
+  try {
+    const response = await axios.put(
+      `${BASE_URL}/todos/${id}`,
+      { title: newTitle, description: newDesc },
+      getHtppOption        
+    );
 
+    return response.data.message;
+  } catch (error) {
+    console.error("Edit error:", error.response?.data || error.message);
+    throw error;
+  }
+};
 
-export { register, login, getAllTodos ,addTodo, deleteTodo};
+export { register, login, getAllTodos ,addTodo, deleteTodo, editTodo};
